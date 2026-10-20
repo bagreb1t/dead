@@ -1,7 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import 'dotenv/config';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+// 1. Configuração de caminhos para ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+// 2. CRIAÇÃO DO SERVIDOR (Tem que vir antes das rotas!)
 const app = express();
 const PORT = process.env.PORT || 3001;
 const URL_API = "https://api.groq.com/openai/v1/chat/completions";
@@ -10,7 +17,12 @@ const MODELO = "openai/gpt-oss-120b";
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
+
+// 4. ROTA RAIZ (Agora o 'app' já existe e pode receber o .get!)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
 
 const usuarios = [];
 
@@ -101,7 +113,7 @@ app.post('/chat', async (req, res) => {
     }
 });
 
-app.listen(PORT, '0.0.0.0',() => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(` Servidor rodando em http://localhost:${PORT}`);
 });
 
