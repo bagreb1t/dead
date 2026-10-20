@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image:url('imagens/deadpool.jpg') ;
+        }
+
+        .container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #cccccc;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #e50914;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background-color: #f40612;
+        }
+
+        .mensagem {
+            margin-top: 15px;
+            font-size: 13px;
+            text-align: center;
+            min-height: 18px;
+        }
+    </style> 
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav class="menu">
+      <a href="index.html" class="link-menu ativo">Home</a>
+      <a href="galeria.html" class="link-menu">Outros Heróis</a>
+      <a href="cadastro.html" class="link-menu">Cadastro </a>
+      <a href="chat.html" class="link-menu">Chat </a>
+  </nav>
+
+          
+        <div class="card">
+            <h2>Login</h2>
+
+            <label for="loginEmail">E-mail</label>
+            <input type="email" id="loginEmail" placeholder="Digite seu e-mail">
+
+            <label for="loginSenha">Senha</label>
+            <input type="password" id="loginSenha" placeholder="Digite sua senha">
+
+            <button id="btnEntrar">Entrar</button>
+            <div id="msgLogin" class="mensagem"></div>
+        </div>
+    </div>
+
+    <script>
+        
+        const btnEntrar = document.querySelector('#btnEntrar');
+        const msgLogin = document.querySelector('#msgLogin');
+
+        btnEntrar.addEventListener('click', async () => {
+            const email = document.querySelector('#loginEmail').value;
+            const senha = document.querySelector('#loginSenha').value;
+
+            try {
+                const resposta = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, senha })
+                });
+
+                const dados = await resposta.json();
+
+                if (!resposta.ok) {
+                    msgLogin.style.color = 'red';
+                    msgLogin.innerText = dados.erro;
+                    return;
+                }
+
+                localStorage.setItem('usuarioLogado', dados.usuario);
+
+                msgLogin.style.color = 'green';
+                msgLogin.innerText = 'Login realizado! Entrando no chat...';
+
+                setTimeout(() => {
+                    window.location.href = 'chat.html';
+                }, 1000);
+
+            } catch (erro) {
+                msgLogin.style.color = 'red';
+                msgLogin.innerText = 'Erro ao conectar com o servidor!';
+            }
+        });
+    </script>
+</body>
+</html>

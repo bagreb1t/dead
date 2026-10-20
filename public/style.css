@@ -1,0 +1,456 @@
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Roboto:wght@400;700&display=swap');
+
+/* 1. VARIÁVEIS E PALETA DE CORES */
+:root {
+  --fundo: #0b0b0d;       
+  --fundo-card: #1e1e24;  
+  --laranja: #ff4500;      
+  --brilho: #ffcc00; 
+  --red: #c20505; 
+
+
+  --texto-principal: #c20505; 
+  --texto-secundario: #a0a0a5;
+  --balao-bg: #ffffff;
+  --balao-texto: #000000;
+  --sombra: rgba(255, 69, 0, 0.3);
+  --transicao: 0.3s ease;
+}
+
+
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--fundo);
+  color: var(--texto-principal);
+  font-family: 'Roboto', sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color var(--transicao), color var(--transicao);
+}
+
+p, h1, h2, a {
+  overflow-wrap: break-word;
+}
+
+/* Barra de Rolagem */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--fundo);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--laranja);
+  border-radius: 5px;
+}
+
+/* 3. MENU DE NAVEGAÇÃO UNIFICADO */
+.menu {
+  position: sticky;
+  top: 0;
+  background: rgba(30, 30, 36, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  padding: 15px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  flex-wrap: wrap;
+}
+
+.link-menu {
+  font-family: 'Bangers', cursive;
+  color: var(--texto-principal);
+  text-decoration: none;
+  font-size: 1.5rem;
+  letter-spacing: 1px;
+  transition: color var(--transicao);
+}
+
+.link-menu:hover, .link-menu.ativo {
+  color: var(--brilho);
+}
+
+.btn-tema {
+  background: var(--fundo-card);
+  border: 2px solid var(--laranja);
+  padding: 6px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease;
+}
+
+.btn-tema:hover {
+  transform: scale(1.1) rotate(15deg);
+}
+
+.icone-tema {
+  width: 28px;
+  height: 28px;
+}
+
+/* 4. COMPONENTES DE FORMULÁRIO E CARDS (LOGIN E CADASTRO) */
+.container-central {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  min-height: calc(100vh - 80px);
+}
+
+.card-form {
+  background-color: var(--fundo-card);
+  padding: 30px;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 360px;
+  border: 2px solid var(--laranja);
+  box-shadow: 0 8px 25px var(--sombra);
+  transition: border-color var(--transicao);
+}
+
+.card-form:hover {
+  border-color: var(--brilho);
+}
+
+.card-form h2 {
+  font-family: 'Bangers', cursive;
+  color: var(--laranja);
+  font-size: 2.2rem;
+  letter-spacing: 1px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.form-grupo {
+  margin-bottom: 15px;
+}
+
+.form-grupo label {
+  display: block;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: var(--texto-secundario);
+}
+
+.form-grupo input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background-color: #ffffff;
+  color: #000000;
+  font-size: 0.95rem;
+}
+
+.btn-acao {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--laranja);
+  color: #ffffff;
+  font-family: 'Bangers', cursive;
+  font-size: 1.3rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background-color var(--transicao), transform 0.1s ease;
+}
+
+.btn-acao:hover {
+  background-color: var(--brilho);
+  color: #000000;
+}
+
+.btn-acao:active {
+  transform: scale(0.98);
+}
+
+.mensagem {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  text-align: center;
+  min-height: 20px;
+}
+
+/* 5. SEÇÃO HERO (HOME) */
+.hero-deadpool {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  min-height: 80vh;
+  padding: 40px;
+  text-align: center;
+  overflow: hidden;
+  width: 100%;
+}
+
+.esquerdo, .direito {
+  width: 35%;
+  text-align: center;
+  padding: 20px;
+}
+
+.direito {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+}
+
+.hero-titulo {
+  font-family: 'Bangers', cursive;
+  font-size: 5.5rem;
+  color: var(--laranja);
+  margin: 0;
+  letter-spacing: 8px;
+  text-shadow: 4px 4px 0px #000000;
+}
+
+.hero-subtitulo {
+  color: var(--texto-principal);
+  font-size: 1.2rem;
+  margin-top: 15px;
+}
+
+.deadpool-front {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 85%;
+  max-height: 650px;
+  z-index: 1;
+  filter: drop-shadow(0px 15px 10px var(--sombra));
+}
+
+.bloco-balao {
+  background: var(--balao-bg);
+  color: var(--balao-texto);
+  padding: 18px 24px;
+  border-radius: 50px;
+  font-weight: bold;
+  width: 100%;
+  max-width: 320px;
+  font-size: 1.1rem;
+  border: 4px solid #000000;
+  box-shadow: 6px 6px 10px var(--laranja);
+  transform: rotate(-4deg);
+}
+
+/* 6. SEÇÃO DE PERFIL */
+.secao-perfil {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 40px;
+  align-items: center;
+  background: var(--fundo-card);
+  padding: 40px;
+  border-radius: 16px;
+  margin: 20px;
+}
+
+.perfil-moldura {
+  overflow: hidden;
+  border-radius: 12px;
+  border: 4px solid var(--laranja);
+  box-shadow: 0 0 20px var(--sombra);
+  transition: border-color var(--transicao);
+}
+
+.perfil-foto {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.perfil-moldura:hover .perfil-foto {
+  transform: scale(1.05);
+}
+
+.perfil-moldura:hover {
+  border-color: var(--brilho);
+}
+
+.perfil-texto h2 {
+  font-family: 'Bangers', cursive;
+  font-size: 2.5rem;
+  color: var(--laranja);
+  margin-bottom: 10px;
+}
+
+.perfil-texto p {
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--texto-secundario);
+  margin-bottom: 15px;
+}
+
+/* 7. VITRINE DE HERÓIS (GRID) */
+.container-vitrine {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card-heroi {
+  background: var(--fundo-card);
+  border: 3px solid var(--laranja);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 380px;
+  transition: transform var(--transicao), box-shadow var(--transicao), border-color var(--transicao);
+}
+
+.card-heroi:hover {
+  transform: translateY(-8px);
+  border-color: var(--brilho);
+  box-shadow: 0 12px 25px var(--sombra);
+}
+
+.foto-heroi {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 2px solid var(--laranja);
+  transition: border-color var(--transicao);
+}
+
+.card-heroi:hover .foto-heroi {
+  border-color: var(--brilho);
+}
+
+.titulo-heroi {
+  font-family: 'Bangers', cursive;
+  color: var(--laranja);
+  font-size: 2rem;
+  margin-top: 10px;
+  letter-spacing: 1px;
+}
+
+.desc-heroi {
+  color: var(--texto-secundario);
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+/* 8. INTERFACE DO CHAT */
+.chat-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 20px;
+}
+
+.chat-container {
+  width: 100%;
+  max-width: 550px;
+  background: var(--fundo-card);
+  padding: 20px;
+  border-radius: 12px;
+  border: 2px solid var(--laranja);
+  box-shadow: 0 8px 25px var(--sombra);
+}
+
+.chat-container h2 {
+  font-family: 'Bangers', cursive;
+  color: var(--laranja);
+  font-size: 1.8rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#caixaChat {
+  height: 320px;
+  overflow-y: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  background: #000000;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-area {
+  display: flex;
+  gap: 10px;
+}
+
+.input-area input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #333;
+  background-color: #ffffff;
+  color: #000000;
+}
+
+.msg {
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 768px) {
+  .hero-deadpool {
+    flex-direction: column;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .esquerdo, .direito {
+    width: 100%;
+    padding: 0;
+  }
+
+  .esquerdo { order: 1; }
+
+  .deadpool-front {
+    order: 2;
+    position: relative;
+    left: auto;
+    transform: none;
+    height: auto;
+    max-width: 240px;
+    margin: 0 auto;
+  }
+  .direito { order: 3; }
+
+  .hero-titulo {
+    font-size: 3.5rem;
+  }
+
+  .bloco-balao {
+    transform: none;
+    max-width: 100%;
+  }
+
+  .container-vitrine {
+    padding: 20px ;
+    gap: 30px;
+  }
+}

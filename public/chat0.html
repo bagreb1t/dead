@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <div class="chat-container">
+    <h2 id="boasVindas"> Bem vindo ao chat</h2>
+    <div id="caixaChat"></div>
+
+    <div id="inputArea">
+        <input type="text" id="mensagem" placeholder="digite">
+        <button id="btnEnviar"></button>
+
+    </div>
+
+   </div>
+
+   <script>
+
+    const usuarioLogado=localStorage.getItem('usuarioLogado')
+
+    if(!usuarioLogado){
+        alert('Voce precisa se cadastrar')
+        window.location.href='cadastro.html'       
+    }
+    else{
+        document.querySelector('#boasVindas').textContent=`Olá ${usuarioLogado}`
+
+    }
+
+
+   </script>
+
+
+
+
+
+</body>
+</html>

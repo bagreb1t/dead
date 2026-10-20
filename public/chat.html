@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Deadpool</title>
+    <style>
+        
+        body { 
+        font-family: Arial, sans-serif; 
+        background: #121212; 
+        color: white; 
+        display: flex; 
+        flex-direction: column; 
+        align-items: center; padding: 20px; }
+
+        .chat-container { width: 100%; 
+        max-width: 500px; 
+        background: #1e1e1e; 
+        padding: 15px; 
+        border-radius: 8px; }
+
+        #caixaChat { 
+        height: 300px; 
+        overflow-y: auto; 
+        border: 1px solid #333; 
+        padding: 10px; 
+        border-radius: 4px; 
+        margin-bottom: 10px; 
+        background: #000; }
+
+        .input-area { 
+        display: flex; 
+        gap: 10px; }
+        input { 
+        flex: 1; 
+        padding: 10px; 
+        border-radius: 4px; 
+        border: 1px solid #333; }
+        button { 
+        padding: 10px 15px; 
+        background: #e50914; 
+        color: white; border: none; 
+        border-radius: 4px; 
+        cursor: pointer; 
+        font-weight: bold; }
+        
+        .msg { margin: 5px 0; }
+    </style>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <nav class="menu">
+      <a href="index.html" class="link-menu">Home</a>
+      <a href="galeria.html" class="link-menu">Outros Heróis</a>
+      <a href="cadastro.html" class="link-menu">Cadastro </a>
+      <a href="chat.html" class="link-menu ativo">Chat </a>
+  </nav>
+
+    <div class="chat-container">
+        <h2 id="boasVindas">Conversando com o personagem</h2>
+        <div id="caixaChat"></div>
+
+        <div class="input-area">
+            <input type="text" id="mensagem" placeholder="Digite sua mensagem...">
+            <button id="btnEnviar">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        const usuarioLogado = localStorage.getItem('usuarioLogado');
+
+        if (!usuarioLogado) {
+            alert('Você precisa fazer login !');
+            window.location.href = 'login.html';
+        } else {
+            document.querySelector('#boasVindas').innerText = `Olá, ${usuarioLogado}! :`;
+        }
+
+        const inputMensagem = document.querySelector('#mensagem');
+        const btnEnviar = document.querySelector('#btnEnviar');
+        const caixaChat = document.querySelector('#caixaChat');
+
+        let historicoConversa = [];
+
+        btnEnviar.addEventListener('click', async () => {
+            const textoMensagem = inputMensagem.value.trim();
+            if (!textoMensagem) return;
+
+            adicionarMensagemNaTela(usuarioLogado, textoMensagem);
+            historicoConversa.push({ role: 'user', content: textoMensagem });
+
+            inputMensagem.value = '';
+            btnEnviar.disabled = true;
+
+            try {
+                const resposta = await fetch('/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ historico: historicoConversa })
+                });
+
+                const dados = await resposta.json();
+
+                if (!resposta.ok) {
+                    adicionarMensagemNaTela('Sistema', dados.erro);
+                    return;
+                }
+
+                adicionarMensagemNaTela('Deadpool ', dados.resposta);
+                historicoConversa.push({ role: 'assistant', content: dados.resposta });
+
+            } catch (erro) {
+                adicionarMensagemNaTela('Sistema', 'Erro ao conectar com o servidor.');
+            } finally {
+                btnEnviar.disabled = false;
+            }
+        });
+
+        function adicionarMensagemNaTela(autor, texto) {
+            const p = document.createElement('p');
+            p.className = 'msg';
+            p.innerHTML = `<strong>${autor}:</strong> ${texto}`;
+            caixaChat.appendChild(p);
+            caixaChat.scrollTop = caixaChat.scrollHeight;
+        }
+    </script>
+</body>
+</html>

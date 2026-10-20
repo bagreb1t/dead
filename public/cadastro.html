@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro e login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-image:'' ;
+        }
+
+        .container {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 8px;
+            width: 300px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #cccccc;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 14px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #e50914;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background-color: #f40612;
+        }
+
+        .mensagem {
+            margin-top: 15px;
+            font-size: 13px;
+            text-align: center;
+            min-height: 18px;
+        }
+    </style> 
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+            <h2>Cadastro</h2>
+
+            <label for="cadUsuario">Usuário</label>
+            <input type="text" id="cadUsuario" placeholder="Digite seu usuário">
+
+            <label for="cadEmail">E-mail</label>
+            <input type="email" id="cadEmail" placeholder="Digite seu e-mail">
+
+            <label for="cadSenha">Senha</label>
+            <input type="password" id="cadSenha" placeholder="Mínimo 6 caracteres">
+
+            <button id="btnCadastrar">Cadastrar</button>
+            <div id="msgCadastro" class="mensagem"></div>
+        </div>
+
+       
+        
+    <script>
+        
+        const btnCadastrar = document.querySelector('#btnCadastrar');
+        const msgCadastro = document.querySelector('#msgCadastro');
+
+        btnCadastrar.addEventListener('click', async () => {
+            const usuario = document.querySelector('#cadUsuario').value;
+            const email = document.querySelector('#cadEmail').value;
+            const senha = document.querySelector('#cadSenha').value;
+
+            try {
+                const resposta = await fetch('/cadastro', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ usuario, email, senha })
+                });
+
+                const dados = await resposta.json();
+
+                if (!resposta.ok) {
+                    msgCadastro.style.color = 'red';
+                    msgCadastro.innerText = dados.erro;
+                    return;
+                }
+
+                msgCadastro.style.color = 'green';
+                msgCadastro.innerText = dados.mensagem;
+
+                document.querySelector('#cadUsuario').value = '';
+                document.querySelector('#cadEmail').value = '';
+                document.querySelector('#cadSenha').value = '';
+
+            } catch (erro) {
+                msgCadastro.style.color = 'red';
+                msgCadastro.innerText = 'Erro ao conectar com o servidor!';
+            }
+        });
+
+        
+        
+    </script>
+</body>
+</html>
